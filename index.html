@@ -11,9 +11,45 @@
             $scope.data = data;
         });
       </script>
+      <style>
+          td {
+            white-space: nowrap;
+            text-align: center;
+          }
+          td .winner {
+            background-color: green
+          }
+          td .bronze {
+            background-color: #CD7F32
+          }
+          td .silver {
+            background-color: silver
+          }
+          td .gold {
+            background-color: gold
+          }
+          .group-name {
+            width: 120px
+          }
+          table {
+            padding: 10px
+          }
+          .group .tr0 {
+            background-color: green
+          }
+          .group .tr1 {
+            background-color: yellow
+          }
+          .group .tr2 {
+            background-color: gray
+          }
+          .group .tr3 {
+            background-color: gray
+          }
+      </style>
   </head>
   <body>
-    <table>
+    <table border="1">
         <tr>
             <th>Group stage</th>
             <th>Groups</th>
@@ -25,7 +61,7 @@
         </tr>
       <tr>
           <td>
-            <table>
+            <table border="1">
                 <tr>
                     <th>Date</th>
                     <th>Home</th>
@@ -34,16 +70,17 @@
                 </tr>
                 <tr ng-repeat="match in data.groupStage">
                     <td>{{match.date}}</td>
-                    <td>{{match.home}}</td>
+                    <td class="{{match.home == match.winner && match.home_score != match.away_score ? 'winner' : ''}}">{{match.home}}</td>
                     <td>{{match.home_score}} - {{match.away_score}}</td>
-                    <td>{{match.away}}</td>
+                    <td class="{{match.away == match.winner && match.home_score != match.away_score ? 'winner' : ''}}">{{match.away}}</td>
                 </tr>
             </table>
           </td>
           <td>
-            <table ng-repeat="group in data.groups">
+            <table class="group" border="1" ng-repeat="group in data.groups">
+                <thead>
                 <tr>
-                    <th>Group {{group.name}}</th>
+                    <th class="group-name">Group {{group.name}}</th>
                     <th>MP</th>
                     <th>W</th>
                     <th>D</th>
@@ -53,8 +90,10 @@
                     <th>+/-</th>
                     <th>PTS</th>
                 </tr>
-                <tr ng-repeat="member in group.members">
-                    <td>{{member.name}}</td>
+                </thead>
+                <tbody>
+                <tr class="tr{{$index}}" ng-repeat="member in group.members">
+                    <td class="group-name">{{member.name}}</td>
                     <td>{{member.matches}}</td>
                     <td>{{member.win}}</td>
                     <td>{{member.draw}}</td>
@@ -64,10 +103,11 @@
                     <td>{{member.goalsFor - member.goalsAway}}</td>
                     <td>{{member.points}}</td>
                 </tr>
+                </tbody>
             </table>
           </td>
           <td>
-              <table>
+              <table border="1">
                 <tr>
                     <th>Date</th>
                     <th>Home</th>
@@ -76,14 +116,14 @@
                 </tr>
                 <tr ng-repeat="match in data.stageOf16">
                     <td>{{match.date}}</td>
-                    <td>{{match.home}}</td>
+                    <td class="{{match.home == match.winner ? 'winner' : ''}}">{{match.home}}</td>
                     <td>{{match.home_score}} - {{match.away_score}}</td>
-                    <td>{{match.away}}</td>
+                    <td class="{{match.away == match.winner ? 'winner' : ''}}">{{match.away}}</td>
                 </tr>
               </table>
           </td>
           <td>
-              <table>
+              <table border="1">
                 <tr>
                     <th>Date</th>
                     <th>Home</th>
@@ -92,14 +132,14 @@
                 </tr>
                 <tr ng-repeat="match in data.quarterFinal">
                     <td>{{match.date}}</td>
-                    <td>{{match.home}}</td>
+                    <td class="{{match.home == match.winner ? 'winner' : ''}}">{{match.home}}</td>
                     <td>{{match.home_score}} - {{match.away_score}}</td>
-                    <td>{{match.away}}</td>
+                    <td class="{{match.away == match.winner ? 'winner' : ''}}">{{match.away}}</td>
                 </tr>
               </table>
           </td>
           <td>
-              <table>
+              <table border="1">
                 <tr>
                     <th>Date</th>
                     <th>Home</th>
@@ -108,14 +148,14 @@
                 </tr>
                 <tr ng-repeat="match in data.semiFinal">
                     <td>{{match.date}}</td>
-                    <td>{{match.home}}</td>
+                    <td class="{{match.home == match.winner ? 'winner' : ''}}">{{match.home}}</td>
                     <td>{{match.home_score}} - {{match.away_score}}</td>
-                    <td>{{match.away}}</td>
+                    <td class="{{match.away == match.winner ? 'winner' : ''}}">{{match.away}}</td>
                 </tr>
               </table>
           </td>
           <td>
-              <table>
+              <table border="1">
                 <tr>
                     <th>Date</th>
                     <th>Home</th>
@@ -124,14 +164,14 @@
                 </tr>
                 <tr >
                     <td>{{data.thirdPlace.date}}</td>
-                    <td>{{data.thirdPlace.home}}</td>
+                    <td class="{{data.thirdPlace.home == data.thirdPlace.winner ? 'bronze' : ''}}">{{data.thirdPlace.home}}</td>
                     <td>{{data.thirdPlace.home_score}} - {{data.thirdPlace.away_score}}</td>
-                    <td>{{data.thirdPlace.away}}</td>
+                    <td class="{{data.thirdPlace.away == data.thirdPlace.winner ? 'bronze' : ''}}">{{data.thirdPlace.away}}</td>
                 </tr>
               </table>
           </td>
           <td>
-              <table>
+              <table border="1">
                 <tr>
                     <th>Date</th>
                     <th>Home</th>
@@ -140,9 +180,9 @@
                 </tr>
                 <tr >
                     <td>{{data.final.date}}</td>
-                    <td>{{data.final.home}}</td>
+                    <td class="{{data.final.home == data.final.winner ? 'gold' : 'silver'}}">{{data.final.home}}</td>
                     <td>{{data.final.home_score}} - {{data.final.away_score}}</td>
-                    <td>{{data.final.away}}</td>
+                    <td class="{{data.final.away == data.final.winner ? 'gold' : 'silver'}}">{{data.final.away}}</td>
                 </tr>
               </table>
           </td>
