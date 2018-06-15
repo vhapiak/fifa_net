@@ -219,7 +219,7 @@ class Group:
 
             self.results.append(result)
 
-        self.results.sort(key = lambda result: result.score, reverse=True)
+        self.results.sort(key = lambda result: (result.score, result.positive - result.negative), reverse=True)
         if self.results[1].score == self.results[2].score:
             print('Need help')
         self.winner = self.results[0].member
