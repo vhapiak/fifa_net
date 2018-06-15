@@ -74,6 +74,16 @@ class Match:
     def __repr__(self):
         return self.__str__()
 
+    def toJson(self):
+        return {
+            'date': self.date,
+            'home': self.home.name,
+            'away': self.away.name,
+            'home_score': self.home_score,
+            'away_score': self.away_score,
+            'winner': self.winner.name
+        }
+
 def playMatch(date, home, away):
     inputs = [0] * len(teams)
     inputs[home.id] = 1
@@ -101,7 +111,7 @@ def playMatch(date, home, away):
     else:
         winner = away
         loser = home
-    match = Match(date, home, away, round(total[0]), round(total[1]), winner, loser)
+    match = Match(date, home, away, int(round(total[0])), int(round(total[1])), winner, loser)
     home.matches.append(match)
     away.matches.append(match)
     return match
@@ -168,6 +178,18 @@ class GroupResult:
         self.negative = 0
         self.score = 0
 
+    def toJson(self):
+        return {
+            'name': self.member.name,
+            'matches': self.matches,
+            'win': self.win,
+            'draw': self.draw,
+            'lose': self.lose,
+            'goalsFor': self.positive,
+            'goalsAway': self.negative,
+            'points': self.score
+        }
+
 class Group:
     def __init__(self, name, members):
         self.name = name
@@ -202,6 +224,13 @@ class Group:
             print('Need help')
         self.winner = self.results[0].member
         self.second = self.results[1].member
+
+    def toJson(self):
+        return {
+            'name': self.name,
+            'members': list(map(lambda result: result.toJson(), self.results))
+        }
+
 
 GroupA = Group('A', [Russia, Saudi_Arabia, Egypt, Uruguay])
 GroupB = Group('B', [IR_Iran, Portugal, Spain, Morocco])
@@ -244,3 +273,16 @@ print (quater_final)
 print (semi_final)
 print (third_place)
 print (final)
+
+json_data = {
+    'groupStage': list(map(lambda match: match.toJson(), group_round)),
+    'groups': list(map(lambda group: group.toJson(), [GroupA, GroupB, GroupC, GroupD, GroupE, GroupF, GroupG, GroupH])),
+    'stageOf16': list(map(lambda match: match.toJson(), stage_of_16)),
+    'quarterFinal': list(map(lambda match: match.toJson(), quater_final)),
+    'semiFinal': list(map(lambda match: match.toJson(), semi_final)),
+    'thirdPlace': third_place.toJson(),
+    'final': final.toJson()
+}
+
+with open('data.js', 'w') as datafile:
+    datafile.write('var data = ' + json.dumps(json_data) + ';')
