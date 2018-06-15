@@ -1,1 +1,154 @@
-<h1>Hello</h1>
+<!doctype html>
+<html lang="en" ng-app="myApp" ng-controller="myCtrl">
+  <head>
+    <meta charset="utf-8">
+    <title>World Cup 2018</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="data.js"></script>
+      <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function($scope) {
+            $scope.data = data;
+        });
+      </script>
+  </head>
+  <body>
+    <table>
+        <tr>
+            <th>Group stage</th>
+            <th>Groups</th>
+            <th>1/8</th>
+            <th>1/4</th>
+            <th>1/2</th>
+            <th>3rd place</th>
+            <th>Final</th>
+        </tr>
+      <tr>
+          <td>
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Home</th>
+                    <th>Score</th>
+                    <th>Away</th>
+                </tr>
+                <tr ng-repeat="match in data.groupStage">
+                    <td>{{match.date}}</td>
+                    <td>{{match.home}}</td>
+                    <td>{{match.home_score}} - {{match.away_score}}</td>
+                    <td>{{match.away}}</td>
+                </tr>
+            </table>
+          </td>
+          <td>
+            <table ng-repeat="group in data.groups">
+                <tr>
+                    <th>Group {{group.name}}</th>
+                    <th>MP</th>
+                    <th>W</th>
+                    <th>D</th>
+                    <th>L</th>
+                    <th>GE</th>
+                    <th>GA</th>
+                    <th>+/-</th>
+                    <th>PTS</th>
+                </tr>
+                <tr ng-repeat="member in group.members">
+                    <td>{{member.name}}</td>
+                    <td>{{member.matches}}</td>
+                    <td>{{member.win}}</td>
+                    <td>{{member.draw}}</td>
+                    <td>{{member.lose}}</td>
+                    <td>{{member.goalsFor}}</td>
+                    <td>{{member.goalsAway}}</td>
+                    <td>{{member.goalsFor - member.goalsAway}}</td>
+                    <td>{{member.points}}</td>
+                </tr>
+            </table>
+          </td>
+          <td>
+              <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Home</th>
+                    <th>Score</th>
+                    <th>Away</th>
+                </tr>
+                <tr ng-repeat="match in data.stageOf16">
+                    <td>{{match.date}}</td>
+                    <td>{{match.home}}</td>
+                    <td>{{match.home_score}} - {{match.away_score}}</td>
+                    <td>{{match.away}}</td>
+                </tr>
+              </table>
+          </td>
+          <td>
+              <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Home</th>
+                    <th>Score</th>
+                    <th>Away</th>
+                </tr>
+                <tr ng-repeat="match in data.quarterFinal">
+                    <td>{{match.date}}</td>
+                    <td>{{match.home}}</td>
+                    <td>{{match.home_score}} - {{match.away_score}}</td>
+                    <td>{{match.away}}</td>
+                </tr>
+              </table>
+          </td>
+          <td>
+              <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Home</th>
+                    <th>Score</th>
+                    <th>Away</th>
+                </tr>
+                <tr ng-repeat="match in data.semiFinal">
+                    <td>{{match.date}}</td>
+                    <td>{{match.home}}</td>
+                    <td>{{match.home_score}} - {{match.away_score}}</td>
+                    <td>{{match.away}}</td>
+                </tr>
+              </table>
+          </td>
+          <td>
+              <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Home</th>
+                    <th>Score</th>
+                    <th>Away</th>
+                </tr>
+                <tr >
+                    <td>{{data.thirdPlace.date}}</td>
+                    <td>{{data.thirdPlace.home}}</td>
+                    <td>{{data.thirdPlace.home_score}} - {{data.thirdPlace.away_score}}</td>
+                    <td>{{data.thirdPlace.away}}</td>
+                </tr>
+              </table>
+          </td>
+          <td>
+              <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Home</th>
+                    <th>Score</th>
+                    <th>Away</th>
+                </tr>
+                <tr >
+                    <td>{{data.final.date}}</td>
+                    <td>{{data.final.home}}</td>
+                    <td>{{data.final.home_score}} - {{data.final.away_score}}</td>
+                    <td>{{data.final.away}}</td>
+                </tr>
+              </table>
+          </td>
+      </tr>
+    </table>
+
+  </body>
+
+</html>

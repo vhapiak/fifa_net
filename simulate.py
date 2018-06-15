@@ -238,5 +238,9 @@ semi_final = [
 third_place = playMatch('14 Jul 2018', semi_final[0].loser, semi_final[1].loser)
 final = playMatch('15 Jul 2018', semi_final[0].winner, semi_final[1].winner)
 
+print (group_round)
+print (stage_of_16)
+print (quater_final)
+print (semi_final)
 print (third_place)
 print (final)
