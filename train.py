@@ -34,7 +34,7 @@ for match in matches:
     outputs = [normalize(match['home_score']), normalize(match['away_score'])]
     ds.addSample(inputs, outputs)
 
-net = buildNetwork(len(teams), len(teams), len(teams), 2)
+net = buildNetwork(len(teams), len(teams), 2)
 trainer = BackpropTrainer(net, ds)
 
 de = 1.0
